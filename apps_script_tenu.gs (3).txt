@@ -1,0 +1,78 @@
+// ════════════════════════════════════════════════
+//  GOOGLE APPS SCRIPT — Kuesioner UMKM TENU
+//  Salin SELURUH kode ini ke Google Apps Script
+// ════════════════════════════════════════════════
+
+function doPost(e) {
+  try {
+    // Ambil spreadsheet aktif
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+
+    // Parse data JSON dari kuesioner
+    const data = JSON.parse(e.postData.contents);
+
+    // Buat baris header jika sheet masih kosong
+    if (sheet.getLastRow() === 0) {
+      const headers = [
+        'Timestamp', 'Nama', 'Usia', 'Profesi', 'Frekuensi PO', 'Perangkat',
+        'Q1','Q2','Q3','Q4','Q5',
+        'Q6','Q7','Q8','Q9','Q10',
+        'Q11','Q12','Q13','Q14','Q15',
+        'Q16','Q17','Q18','Q19','Q20',
+        'Skor V1 (Kemudahan)', 'Skor V2 (Efisiensi)',
+        'Skor V3 (WhatsApp)', 'Skor V4 (Kepuasan)',
+        'Total Skor', 'Persentase', 'Kategori'
+      ];
+      sheet.appendRow(headers);
+
+      // Format header: bold + warna
+      const headerRange = sheet.getRange(1, 1, 1, headers.length);
+      headerRange.setFontWeight('bold');
+      headerRange.setBackground('#3d2208');
+      headerRange.setFontColor('#ffffff');
+      sheet.setFrozenRows(1);
+    }
+
+    // Susun baris data responden
+    const row = [
+      data.timestamp,
+      data.nama,
+      data.usia,
+      data.profesi,
+      data.frekuensi,
+      data.perangkat,
+      data.Q1,  data.Q2,  data.Q3,  data.Q4,  data.Q5,
+      data.Q6,  data.Q7,  data.Q8,  data.Q9,  data.Q10,
+      data.Q11, data.Q12, data.Q13, data.Q14, data.Q15,
+      data.Q16, data.Q17, data.Q18, data.Q19, data.Q20,
+      data.skor_v1,
+      data.skor_v2,
+      data.skor_v3,
+      data.skor_v4,
+      data.total_skor,
+      data.persentase,
+      data.kategori,
+    ];
+
+    sheet.appendRow(row);
+
+    // Warnai baris berdasarkan kategori
+    const lastRow   = sheet.getLastRow();
+    const rowRange  = sheet.getRange(lastRow, 1, 1, row.length);
+    const kategori  = data.kategori;
+    if      (kategori === 'Sangat Baik') rowRange.setBackground('#edf7f1');
+    else if (kategori === 'Baik')        rowRange.setBackground('#e8f4fd');
+    else if (kategori === 'Cukup')       rowRange.setBackground('#fff8e1');
+    else                                 rowRange.setBackground('#fff0f0');
+
+    // Kembalikan respons sukses (CORS-friendly)
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'ok' }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
