@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuesioner Penelitian – Website UMKM TENU</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf6f0;
+    --warm-white: #fffdf9;
+    --caramel: #c47c2b;
+    --caramel-light: #e8a44a;
+    --caramel-pale: #fdf0dc;
+    --brown-deep: #3d2208;
+    --brown-mid: #7a4515;
+    --text: #2c1a08;
+    --text-muted: #8a6840;
+    --border: #e8d5b5;
+    --border-hover: #c47c2b;
+    --success: #3d8f5f;
+    --success-bg: #edf7f1;
+    --shadow: 0 4px 24px rgba(61,34,8,.08);
+    --shadow-lg: 0 12px 48px rgba(61,34,8,.14);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--cream);
+    color: var(--text);
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--brown-deep) 0%, var(--brown-mid) 60%, var(--caramel) 100%);
+    padding: 56px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.25);
+    color: #fce8c3;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 99px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    max-width: 680px;
+    margin: 0 auto 16px;
+  }
+  .hero p {
+    color: rgba(255,255,255,.75);
+    font-size: .95rem;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .hero-meta span {
+    color: rgba(255,255,255,.65);
+    font-size: .8rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hero-meta span::before {
+    content: '●';
+    color: var(--caramel-light);
+    font-size: .5rem;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 780px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* ── PETUNJUK ── */
+  .petunjuk {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--caramel);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 32px 0 0;
+  }
+  .petunjuk h3 {
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    margin-bottom: 10px;
+  }
+  .petunjuk p { font-size: .9rem; color: var(--text-muted); margin-bottom: 6px; }
+  .scale-legend {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;
+  }
+  .scale-legend .tag {
+    background: var(--caramel-pale);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 3px 12px;
+    font-size: .78rem;
+    font-weight: 500;
+    color: var(--brown-mid);
+  }
+
+  /* ── PROGRESS ── */
+  .progress-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250,246,240,.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+  }
+  .progress-inner { max-width: 780px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+  .progress-bar-bg {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--caramel), var(--caramel-light));
+    border-radius: 99px;
+    transition: width .4s ease;
+    width: 0%;
+  }
+  .progress-text { font-size: .8rem; font-weight: 600; color: var(--caramel); white-space: nowrap; }
+
+  /* ── IDENTITAS ── */
+  .identitas-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-top: 24px;
+    box-shadow: var(--shadow);
+  }
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--caramel-pale);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 4px 14px;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--brown-mid);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--brown-deep);
+    margin-bottom: 4px;
+  }
+  .section-desc {
+    font-size: .88rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:520px){ .form-grid { grid-template-columns: 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  label.field-label {
+    font-size: .82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  input[type=text], select {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: .9rem;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    transition: border-color .2s;
+    outline: none;
+    width: 100%;
+  }
+  input[type=text]:focus, select:focus { border-color: var(--caramel); }
+
+  /* ── QUESTION SECTION ── */
+  .q-section {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 24px;
+    box-shadow: var(--shadow);
+  }
+  .q-section-header {
+    background: linear-gradient(90deg, var(--brown-deep), var(--brown-mid));
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .q-num {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,.15);
+    border: 1.5px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8rem; font-weight: 700;
+    color: #fff; flex-shrink: 0;
+  }
+  .q-section-header .info h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 700; color: #fff;
+  }
+  .q-section-header .info p {
+    font-size: .78rem; color: rgba(255,255,255,.65); margin-top: 2px;
+  }
+  .hypothesis-tag {
+    margin-left: auto;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    color: rgba(255,255,255,.8);
+    font-size: .7rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 99px;
+    white-space: nowrap;
+  }
+
+  .q-body { padding: 8px 0; }
+  .q-item {
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: start;
+    transition: background .15s;
+  }
+  .q-item:last-child { border-bottom: none; }
+  .q-item:hover { background: rgba(196,124,43,.03); }
+  .q-item.answered { background: rgba(61,143,95,.04); }
+  .q-index {
+    width: 28px; height: 28px;
+    background: var(--caramel-pale);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    font-size: .75rem; font-weight: 700;
+    color: var(--caramel);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .q-content {}
+  .q-text {
+    font-size: .9rem;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .q-text strong { color: var(--brown-deep); font-weight: 500; }
+  .likert-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .likert-opt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    min-width: 52px;
+  }
+  .likert-opt input[type=radio] { display: none; }
+  .likert-box {
+    width: 52px; height: 42px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .95rem; font-weight: 700;
+    color: var(--text-muted);
+    transition: all .2s;
+    user-select: none;
+  }
+  .likert-opt input:checked + .likert-box {
+    border-color: var(--caramel);
+    background: var(--caramel);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(196,124,43,.35);
+  }
+  .likert-opt:hover .likert-box {
+    border-color: var(--caramel-light);
+    background: var(--caramel-pale);
+  }
+  .likert-label {
+    font-size: .6rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  /* ── SECTION SCORE BOX ── */
+  .section-score {
+    margin: 0 28px 20px;
+    background: var(--caramel-pale);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .section-score .label { font-size: .82rem; font-weight: 500; color: var(--brown-mid); }
+  .section-score .score-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700; color: var(--caramel);
+  }
+  .score-bar-wrap {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,.6);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .score-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--caramel), var(--caramel-light));
+    border-radius: 99px;
+    transition: width .5s ease;
+  }
+  .score-cat {
+    font-size: .75rem; font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 99px;
+    border: 1px solid;
+  }
+  .cat-sangat-baik { background: #edf7f1; border-color: #3d8f5f; color: #2a6343; }
+  .cat-baik        { background: #e8f4fd; border-color: #3a86c0; color: #235578; }
+  .cat-cukup       { background: #fff8e1; border-color: #d4a017; color: #8a6400; }
+  .cat-kurang      { background: #fff0f0; border-color: #d9534f; color: #a02020; }
+
+  /* ── SUBMIT + RESULT ── */
+  .actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 32px 0; }
+  .btn {
+    padding: 13px 32px;
+    border-radius: 99px;
+    border: none;
+    font-size: .9rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--caramel), var(--caramel-light));
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(196,124,43,.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(196,124,43,.5); }
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--border);
+    color: var(--text-muted);
+  }
+  .btn-outline:hover { border-color: var(--caramel); color: var(--caramel); background: var(--caramel-pale); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; transform: none !important; }
+
+  /* ── RESULT CARD ── */
+  .result-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px 28px;
+    margin-top: 8px;
+    display: none;
+    box-shadow: var(--shadow-lg);
+    animation: fadeUp .5s ease;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(16px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+  .result-card.visible { display: block; }
+  .result-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .result-header .checkmark {
+    width: 60px; height: 60px;
+    background: var(--success-bg);
+    border: 2px solid var(--success);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    margin: 0 auto 16px;
+  }
+  .result-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700; color: var(--brown-deep);
+    margin-bottom: 6px;
+  }
+  .result-header p { font-size: .88rem; color: var(--text-muted); }
+
+  .total-score-box {
+    background: linear-gradient(135deg, var(--brown-deep), var(--brown-mid));
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .total-score-box .label { color: rgba(255,255,255,.65); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+  .total-score-box .number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 700; color: #fff; line-height: 1;
+  }
+  .total-score-box .max { color: rgba(255,255,255,.5); font-size: 1.1rem; }
+  .total-score-box .pct { color: var(--caramel-light); font-size: 1rem; font-weight: 600; margin-top: 6px; }
+  .total-score-box .interpretation {
+    margin-top: 12px;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: var(--radius-sm);
+    padding: 8px 16px;
+    color: #fff;
+    font-size: .88rem;
+    font-weight: 500;
+  }
+
+  .breakdown-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  @media(max-width:480px){ .breakdown-grid { grid-template-columns: 1fr; } }
+  .breakdown-item {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+  }
+  .breakdown-item .bi-title { font-size: .78rem; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em; }
+  .breakdown-item .bi-score { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--caramel); }
+  .breakdown-item .bi-pct { font-size: .8rem; color: var(--text-muted); }
+  .breakdown-item .bi-cat { margin-top: 6px; }
+
+  .result-note {
+    background: var(--caramel-pale);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    font-size: .85rem;
+    color: var(--brown-mid);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .result-note strong { color: var(--brown-deep); }
+
+  .print-section { text-align: center; }
+
+  /* ── VALIDATION ── */
+  .error-msg {
+    background: #fff0f0;
+    border: 1px solid #d9534f;
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: .85rem;
+    color: #a02020;
+    margin-bottom: 16px;
+    display: none;
+  }
+  .error-msg.visible { display: block; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-size: .78rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: #fff; }
+    .progress-wrap, .actions, .print-section, .petunjuk .scale-legend { display: none !important; }
+    .q-section, .identitas-card, .result-card { box-shadow: none; border: 1px solid #ccc; }
+    .likert-box { border: 1px solid #999; }
+    .likert-opt input:checked + .likert-box { background: #555 !important; color: #fff !important; border-color: #555 !important; }
+    .hero { background: #3d2208 !important; -webkit-print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Kuesioner Penelitian</div>
+  <h1>Pengembangan Website Pemesanan Online UMKM TENU</h1>
+  <p>Berbasis GitHub Pages yang Terintegrasi dengan WhatsApp untuk Meningkatkan Efisiensi Pengelolaan Pesanan</p>
+  <div class="hero-meta">
+    <span>Program Studi Sistem Informasi – Universitas Terbuka</span>
+    <span>STSI4310 – Metodologi Penelitian</span>
+    <span>Puteri Mulqia Rahmah · 051469264</span>
+  </div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressBar"></div></div>
+    <div class="progress-text" id="progressText">0 / 20</div>
+  </div>
+</div>
+
+<!-- MAIN FORM -->
+<div class="container">
+
+  <!-- PETUNJUK -->
+  <div class="petunjuk">
+    <h3>Petunjuk Pengisian</h3>
+    <p>Berikan penilaian Anda dengan memilih salah satu angka pada setiap pernyataan berikut. Isilah kuesioner ini berdasarkan pengalaman Anda menggunakan website pemesanan UMKM TENU.</p>
+    <p>Tidak ada jawaban benar atau salah. Kejujuran Anda sangat membantu keberhasilan penelitian ini.</p>
+    <div class="scale-legend">
+      <span class="tag">1 · Sangat Tidak Setuju (STS)</span>
+      <span class="tag">2 · Tidak Setuju (TS)</span>
+      <span class="tag">3 · Netral (N)</span>
+      <span class="tag">4 · Setuju (S)</span>
+      <span class="tag">5 · Sangat Setuju (SS)</span>
+    </div>
+  </div>
+
+  <form id="kuesionerForm" novalidate>
+
+    <!-- ── IDENTITAS ── -->
+    <div class="identitas-card">
+      <div class="section-label">Data Responden</div>
+      <div class="section-title">Identitas Responden</div>
+      <p class="section-desc">Data berikut bersifat rahasia dan hanya digunakan untuk keperluan penelitian.</p>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label class="field-label" for="nama">Nama (boleh inisial)</label>
+          <input type="text" id="nama" name="nama" placeholder="Contoh: P.M.R.">
+        </div>
+        <div class="form-group">
+          <label class="field-label" for="usia">Usia</label>
+          <select id="usia" name="usia">
+            <option value="">-- Pilih --</option>
+            <option>< 17 tahun</option>
+            <option>17–22 tahun</option>
+            <option>23–30 tahun</option>
+            <option>> 30 tahun</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="field-label" for="profesi">Profesi</label>
+          <select id="profesi" name="profesi">
+            <option value="">-- Pilih --</option>
+            <option>Pelajar / Mahasiswa</option>
+            <option>Karyawan Swasta</option>
+            <option>PNS / ASN</option>
+            <option>Wiraswasta</option>
+            <option>Lainnya</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="field-label" for="frekuensi">Frekuensi PO TENU</label>
+          <select id="frekuensi" name="frekuensi">
+            <option value="">-- Pilih --</option>
+            <option>Pertama kali</option>
+            <option>2–3 kali</option>
+            <option>4–6 kali</option>
+            <option>> 6 kali</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="field-label" for="perangkat">Perangkat digunakan</label>
+          <select id="perangkat" name="perangkat">
+            <option value="">-- Pilih --</option>
+            <option>Smartphone (Android)</option>
+            <option>Smartphone (iOS)</option>
+            <option>Laptop / Komputer</option>
+            <option>Tablet</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         VARIABEL 1 – KEMUDAHAN PENGGUNAAN WEBSITE
+    ══════════════════════════════════════════ -->
+    <div class="q-section" id="sec1">
+      <div class="q-section-header">
+        <div class="q-num">I</div>
+        <div class="info">
+          <h2>Kemudahan Penggunaan Website</h2>
+          <p>Usability &amp; User Experience · 5 Pernyataan</p>
+        </div>
+        <div class="hypothesis-tag">H1</div>
+      </div>
+      <div class="q-body">
+        <!-- Q1 -->
+        <div class="q-item" id="qi-1">
+          <div class="q-index">1</div>
+          <div class="q-content">
+            <p class="q-text">Tampilan website UMKM TENU <strong>mudah dipahami</strong> dan tidak membingungkan.</p>
+            <div class="likert-row"><?php /* generated below */ ?></div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="q-item" id="qi-2">
+          <div class="q-index">2</div>
+          <div class="q-content">
+            <p class="q-text">Saya dapat <strong>menemukan informasi produk</strong> (varian rasa, harga, jadwal PO) dengan cepat tanpa kebingungan.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="q-item" id="qi-3">
+          <div class="q-index">3</div>
+          <div class="q-content">
+            <p class="q-text">Proses pengisian <strong>formulir pemesanan</strong> mudah diikuti langkah demi langkah.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="q-item" id="qi-4">
+          <div class="q-index">4</div>
+          <div class="q-content">
+            <p class="q-text">Website dapat <strong>diakses dengan lancar</strong> dari perangkat smartphone yang saya gunakan.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="q-item" id="qi-5">
+          <div class="q-index">5</div>
+          <div class="q-content">
+            <p class="q-text">Secara keseluruhan, website TENU <strong>lebih mudah digunakan</strong> dibandingkan bertanya langsung melalui WhatsApp.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+      </div>
+      <div class="section-score" id="scoreBox1">
+        <div>
+          <div class="label">Skor Variabel I</div>
+          <div><span class="score-val" id="sv1">–</span> <span style="font-size:.8rem;color:var(--text-muted)">/ 25</span></div>
+        </div>
+        <span class="score-cat" id="sc1">Belum diisi</span>
+        <div class="score-bar-wrap" style="width:100%"><div class="score-bar" id="sb1" style="width:0"></div></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         VARIABEL 2 – EFISIENSI PENGELOLAAN PESANAN
+    ══════════════════════════════════════════ -->
+    <div class="q-section" id="sec2">
+      <div class="q-section-header">
+        <div class="q-num">II</div>
+        <div class="info">
+          <h2>Efisiensi Pengelolaan Pesanan</h2>
+          <p>Order Management Efficiency · 5 Pernyataan</p>
+        </div>
+        <div class="hypothesis-tag">H1 · H2</div>
+      </div>
+      <div class="q-body">
+        <div class="q-item" id="qi-6">
+          <div class="q-index">6</div>
+          <div class="q-content">
+            <p class="q-text">Website membantu saya <strong>memahami jadwal pembukaan PO</strong> tanpa perlu bertanya kepada pemilik.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <div class="q-item" id="qi-7">
+          <div class="q-index">7</div>
+          <div class="q-content">
+            <p class="q-text">Informasi mekanisme <strong>repeat order</strong> dan prosedur <strong>reschedule</strong> tersaji secara jelas di website.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <div class="q-item" id="qi-8">
+          <div class="q-index">8</div>
+          <div class="q-content">
+            <p class="q-text">Proses pemesanan melalui website <strong>lebih cepat</strong> dibandingkan dengan cara manual sebelumnya.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <div class="q-item" id="qi-9">
+          <div class="q-index">9</div>
+          <div class="q-content">
+            <p class="q-text">Saya merasa <strong>tidak perlu mengulang pertanyaan</strong> yang sama berkali-kali karena informasi sudah tersedia di website.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <div class="q-item" id="qi-10">
+          <div class="q-index">10</div>
+          <div class="q-content">
+            <p class="q-text">Website memungkinkan saya melakukan pemesanan <strong>kapan saja dan dari mana saja</strong> dengan mudah.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+      </div>
+      <div class="section-score" id="scoreBox2">
+        <div>
+          <div class="label">Skor Variabel II</div>
+          <div><span class="score-val" id="sv2">–</span> <span style="font-size:.8rem;color:var(--text-muted)">/ 25</span></div>
+        </div>
+        <span class="score-cat" id="sc2">Belum diisi</span>
+        <div class="score-bar-wrap" style="width:100%"><div class="score-bar" id="sb2" style="width:0"></div></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         VARIABEL 3 – INTEGRASI WHATSAPP
+    ══════════════════════════════════════════ -->
+    <div class="q-section" id="sec3">
+      <div class="q-section-header">
+        <div class="q-num">III</div>
+        <div class="info">
+          <h2>Integrasi dengan WhatsApp</h2>
+          <p>WhatsApp Integration · 5 Pernyataan</p>
+        </div>
+        <div class="hypothesis-tag">H2</div>
+      </div>
+      <div class="q-body">
+        <div class="q-item" id="qi-11">
+          <div class="q-index">11</div>
+          <div class="q-content">
+            <p class="q-text">Setelah mengisi formulir, saya otomatis <strong>diarahkan ke WhatsApp</strong> dengan format pesan yang sudah tersusun rapi.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <div class="q-item" id="qi-12">
+          <div class="q-index">12</div>
+          <div class="q-content">
+            <p class="q-text">Format pesan yang dikirim ke WhatsApp sudah <strong>lengkap dan terstruktur</strong> sehingga tidak perlu diketik ulang.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <div class="q-item" id="qi-13">
+          <div class="q-index">13</div>
+          <div class="q-content">
+            <p class="q-text">Integrasi website dengan WhatsApp <strong>mengurangi kemungkinan kesalahan</strong> dalam pencatatan pesanan.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <div class="q-item" id="qi-14">
+          <div class="q-index">14</div>
+          <div class="q-content">
+            <p class="q-text">Saya merasa <strong>nyaman</strong> menggunakan WhatsApp sebagai media konfirmasi pesanan yang sudah terintegrasi dengan website.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <div class="q-item" id="qi-15">
+          <div class="q-index">15</div>
+          <div class="q-content">
+            <p class="q-text">Panduan pembayaran melalui <strong>QRIS</strong> yang ditampilkan di website sudah jelas dan mudah diikuti.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+      </div>
+      <div class="section-score" id="scoreBox3">
+        <div>
+          <div class="label">Skor Variabel III</div>
+          <div><span class="score-val" id="sv3">–</span> <span style="font-size:.8rem;color:var(--text-muted)">/ 25</span></div>
+        </div>
+        <span class="score-cat" id="sc3">Belum diisi</span>
+        <div class="score-bar-wrap" style="width:100%"><div class="score-bar" id="sb3" style="width:0"></div></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         VARIABEL 4 – KEPUASAN PELANGGAN
+    ══════════════════════════════════════════ -->
+    <div class="q-section" id="sec4">
+      <div class="q-section-header">
+        <div class="q-num">IV</div>
+        <div class="info">
+          <h2>Kepuasan Pelanggan</h2>
+          <p>Customer Satisfaction · 5 Pernyataan</p>
+        </div>
+        <div class="hypothesis-tag">H3</div>
+      </div>
+      <div class="q-body">
+        <div class="q-item" id="qi-16">
+          <div class="q-index">16</div>
+          <div class="q-content">
+            <p class="q-text">Secara keseluruhan, saya <strong>puas</strong> dengan pengalaman menggunakan website pemesanan TENU.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <div class="q-item" id="qi-17">
+          <div class="q-index">17</div>
+          <div class="q-content">
+            <p class="q-text">Informasi yang tersedia di website <strong>memenuhi semua kebutuhan</strong> saya sebelum melakukan pemesanan.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <div class="q-item" id="qi-18">
+          <div class="q-index">18</div>
+          <div class="q-content">
+            <p class="q-text">Saya akan <strong>merekomendasikan</strong> website TENU kepada teman atau kenalan yang ingin memesan.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <div class="q-item" id="qi-19">
+          <div class="q-index">19</div>
+          <div class="q-content">
+            <p class="q-text">Website membuat saya merasa lebih <strong>percaya dan yakin</strong> dalam melakukan pemesanan produk TENU.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+        <div class="q-item" id="qi-20">
+          <div class="q-index">20</div>
+          <div class="q-content">
+            <p class="q-text">Saya berencana untuk terus menggunakan website ini pada <strong>pre-order berikutnya</strong>.</p>
+            <div class="likert-row"></div>
+          </div>
+        </div>
+      </div>
+      <div class="section-score" id="scoreBox4">
+        <div>
+          <div class="label">Skor Variabel IV</div>
+          <div><span class="score-val" id="sv4">–</span> <span style="font-size:.8rem;color:var(--text-muted)">/ 25</span></div>
+        </div>
+        <span class="score-cat" id="sc4">Belum diisi</span>
+        <div class="score-bar-wrap" style="width:100%"><div class="score-bar" id="sb4" style="width:0"></div></div>
+      </div>
+    </div>
+
+    <!-- ERROR MSG -->
+    <div class="error-msg" id="errorMsg">⚠ Harap isi semua pernyataan (1–20) sebelum mengirim kuesioner.</div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+      <button type="button" class="btn btn-outline" onclick="resetForm()">↺ Reset</button>
+      <button type="submit" class="btn btn-primary" id="submitBtn">Hitung Skor &amp; Lihat Hasil ➜</button>
+    </div>
+
+  </form><!-- end form -->
+
+  <!-- ── HASIL ── -->
+  <div class="result-card" id="resultCard">
+    <div class="result-header">
+      <div class="checkmark">✓</div>
+      <h2>Hasil Kuesioner</h2>
+      <p>Berikut adalah rekapitulasi penilaian Anda terhadap website pemesanan UMKM TENU</p>
+    </div>
+
+    <!-- TOTAL SCORE -->
+    <div class="total-score-box">
+      <div class="label">Total Skor Keseluruhan</div>
+      <div class="number" id="rTotalScore">0 <span class="max">/ 100</span></div>
+      <div class="pct" id="rPct">0%</div>
+      <div class="interpretation" id="rInterpret">–</div>
+    </div>
+
+    <!-- BREAKDOWN -->
+    <div class="breakdown-grid">
+      <div class="breakdown-item">
+        <div class="bi-title">Variabel I — Kemudahan Penggunaan</div>
+        <div><span class="bi-score" id="rb1">–</span> <span class="bi-pct" id="rp1"></span></div>
+        <div class="bi-cat"><span class="score-cat" id="rc1"></span></div>
+      </div>
+      <div class="breakdown-item">
+        <div class="bi-title">Variabel II — Efisiensi Pesanan</div>
+        <div><span class="bi-score" id="rb2">–</span> <span class="bi-pct" id="rp2"></span></div>
+        <div class="bi-cat"><span class="score-cat" id="rc2"></span></div>
+      </div>
+      <div class="breakdown-item">
+        <div class="bi-title">Variabel III — Integrasi WhatsApp</div>
+        <div><span class="bi-score" id="rb3">–</span> <span class="bi-pct" id="rp3"></span></div>
+        <div class="bi-cat"><span class="score-cat" id="rc3"></span></div>
+      </div>
+      <div class="breakdown-item">
+        <div class="bi-title">Variabel IV — Kepuasan Pelanggan</div>
+        <div><span class="bi-score" id="rb4">–</span> <span class="bi-pct" id="rp4"></span></div>
+        <div class="bi-cat"><span class="score-cat" id="rc4"></span></div>
+      </div>
+    </div>
+
+    <!-- INTERPRETASI SKALA -->
+    <div class="result-note">
+      <strong>Pedoman Interpretasi Skor (per variabel, maks 25):</strong><br>
+      21–25 = Sangat Baik &nbsp;|&nbsp; 16–20 = Baik &nbsp;|&nbsp; 11–15 = Cukup &nbsp;|&nbsp; ≤10 = Kurang<br><br>
+      <strong>Pedoman Interpretasi Total Skor (maks 100):</strong><br>
+      81–100 = Sangat Baik &nbsp;|&nbsp; 61–80 = Baik &nbsp;|&nbsp; 41–60 = Cukup &nbsp;|&nbsp; ≤40 = Kurang
+    </div>
+
+    <div class="print-section">
+      <button class="btn btn-outline" onclick="window.print()">🖨 Cetak / Simpan PDF</button>
+    </div>
+  </div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  Kuesioner Penelitian · UMKM TENU · STSI4310 Universitas Terbuka · 2025/2026
+</div>
+
+<script>
+/* ── BUILD LIKERT OPTIONS ── */
+const labels = ['STS','TS','N','S','SS'];
+const total  = 20;
+
+document.querySelectorAll('.q-item').forEach((item, idx) => {
+  const qNum = idx + 1;
+  const row  = item.querySelector('.likert-row');
+  for (let v = 1; v <= 5; v++) {
+    const lbl  = document.createElement('label');
+    lbl.className = 'likert-opt';
+    lbl.innerHTML = `
+      <input type="radio" name="q${qNum}" value="${v}" required>
+      <div class="likert-box">${v}</div>
+      <span class="likert-label">${labels[v-1]}</span>`;
+    row.appendChild(lbl);
+  }
+});
+
+/* ── PROGRESS ── */
+function updateProgress() {
+  let answered = 0;
+  for (let i = 1; i <= total; i++) {
+    if (document.querySelector(`input[name="q${i}"]:checked`)) answered++;
+  }
+  document.getElementById('progressBar').style.width = (answered / total * 100) + '%';
+  document.getElementById('progressText').textContent = `${answered} / ${total}`;
+}
+
+/* ── LIVE SECTION SCORES ── */
+function categorise(score, max) {
+  const pct = score / max * 100;
+  if (pct >= 84) return { text:'Sangat Baik', cls:'cat-sangat-baik' };
+  if (pct >= 64) return { text:'Baik',        cls:'cat-baik'        };
+  if (pct >= 44) return { text:'Cukup',       cls:'cat-cukup'       };
+  return                 { text:'Kurang',      cls:'cat-kurang'      };
+}
+
+function sectionScore(start, end) {
+  let s = 0, answered = 0;
+  for (let i = start; i <= end; i++) {
+    const r = document.querySelector(`input[name="q${i}"]:checked`);
+    if (r) { s += parseInt(r.value); answered++; }
+  }
+  return { score: s, answered, complete: answered === (end - start + 1) };
+}
+
+function updateSectionUI(n, start, end) {
+  const { score, complete } = sectionScore(start, end);
+  const svEl = document.getElementById('sv' + n);
+  const scEl = document.getElementById('sc' + n);
+  const sbEl = document.getElementById('sb' + n);
+  if (!complete) {
+    svEl.textContent = '–';
+    scEl.textContent = 'Belum lengkap';
+    scEl.className   = 'score-cat';
+    sbEl.style.width = '0';
+    return;
+  }
+  svEl.textContent = score;
+  const cat = categorise(score, 25);
+  scEl.textContent  = cat.text;
+  scEl.className    = 'score-cat ' + cat.cls;
+  sbEl.style.width  = (score / 25 * 100) + '%';
+}
+
+/* ── MARK ANSWERED ── */
+document.getElementById('kuesionerForm').addEventListener('change', e => {
+  if (e.target.type === 'radio') {
+    const name = e.target.name;
+    const idx  = parseInt(name.replace('q',''));
+    const item = document.getElementById('qi-' + idx);
+    if (item) item.classList.add('answered');
+    updateProgress();
+    if (idx <= 5)  updateSectionUI(1, 1, 5);
+    if (idx >= 6  && idx <= 10) updateSectionUI(2, 6, 10);
+    if (idx >= 11 && idx <= 15) updateSectionUI(3, 11, 15);
+    if (idx >= 16) updateSectionUI(4, 16, 20);
+  }
+});
+
+/* ╔══════════════════════════════════════════════════╗
+   ║  LANGKAH WAJIB SEBELUM UPLOAD KE GITHUB PAGES   ║
+   ║  Ganti teks di bawah dengan URL Apps Script-mu  ║
+   ║  Contoh:                                         ║
+   ║  https://script.google.com/macros/s/AKfy.../exec ║
+   ╚══════════════════════════════════════════════════╝ */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbybpL5pgmn9-d56VDXejAdYvl9gdYgZ6u9RpRYbwX6OxygXskAzbwR0zknLhTlnQ5nCOA/exec';
+
+/* ── SUBMIT ── */
+document.getElementById('kuesionerForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const errEl = document.getElementById('errorMsg');
+
+  // validasi semua soal terjawab
+  for (let i = 1; i <= total; i++) {
+    if (!document.querySelector(`input[name="q${i}"]:checked`)) {
+      errEl.classList.add('visible');
+      document.getElementById('qi-' + i).scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
+  }
+  errEl.classList.remove('visible');
+
+  // hitung skor
+  const s1  = sectionScore(1,  5).score;
+  const s2  = sectionScore(6,  10).score;
+  const s3  = sectionScore(11, 15).score;
+  const s4  = sectionScore(16, 20).score;
+  const tot = s1 + s2 + s3 + s4;
+  const pct = Math.round(tot);
+  const totCat = categorise(tot, 100);
+
+  // kumpulkan jawaban per soal
+  const jawaban = {};
+  for (let i = 1; i <= total; i++) {
+    jawaban['Q' + i] = parseInt(document.querySelector(`input[name="q${i}"]:checked`).value);
+  }
+
+  // payload ke Google Sheets
+  const payload = {
+    timestamp   : new Date().toLocaleString('id-ID'),
+    nama        : document.getElementById('nama').value || '–',
+    usia        : document.getElementById('usia').value || '–',
+    profesi     : document.getElementById('profesi').value || '–',
+    frekuensi   : document.getElementById('frekuensi').value || '–',
+    perangkat   : document.getElementById('perangkat').value || '–',
+    ...jawaban,
+    skor_v1     : s1,
+    skor_v2     : s2,
+    skor_v3     : s3,
+    skor_v4     : s4,
+    total_skor  : tot,
+    persentase  : pct + '%',
+    kategori    : totCat.text,
+  };
+
+  // tampilkan loading
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = '⏳ Mengirim data...';
+
+  // kirim ke Google Sheets
+  try {
+    if (SCRIPT_URL !== 'PASTE_URL_APPS_SCRIPT_KAMU_DI_SINI') {
+      await fetch(SCRIPT_URL, {
+        method : 'POST',
+        mode   : 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body   : JSON.stringify(payload),
+      });
+    }
+  } catch(err) {
+    console.warn('Gagal kirim ke Sheets:', err);
+  }
+
+  submitBtn.disabled    = false;
+  submitBtn.textContent = 'Hitung Skor & Lihat Hasil ➜';
+
+  // tampilkan hasil di halaman
+  document.getElementById('rTotalScore').innerHTML = `${tot} <span class="max">/ 100</span>`;
+  document.getElementById('rPct').textContent       = pct + '%';
+  document.getElementById('rInterpret').textContent = totCat.text + ' — ' + interpretText(tot);
+
+  [[1,s1],[2,s2],[3,s3],[4,s4]].forEach(([n,sc]) => {
+    const cat = categorise(sc, 25);
+    const p   = Math.round(sc/25*100);
+    document.getElementById('rb'+n).textContent = sc + ' / 25';
+    document.getElementById('rp'+n).textContent = '(' + p + '%)';
+    const rcEl = document.getElementById('rc'+n);
+    rcEl.textContent  = cat.text;
+    rcEl.className    = 'score-cat ' + cat.cls;
+  });
+
+  const rc = document.getElementById('resultCard');
+  rc.classList.add('visible');
+  rc.scrollIntoView({ behavior:'smooth', block:'start' });
+});
+
+function interpretText(tot) {
+  if (tot >= 81) return 'Website TENU dinilai sangat baik dan layak digunakan secara penuh.';
+  if (tot >= 61) return 'Website TENU dinilai baik, ada ruang kecil untuk penyempurnaan.';
+  if (tot >= 41) return 'Website TENU cukup berfungsi, tetapi butuh perbaikan signifikan.';
+  return                 'Website TENU perlu evaluasi ulang sebelum digunakan secara resmi.';
+}
+
+/* ── RESET ── */
+function resetForm() {
+  document.getElementById('kuesionerForm').reset();
+  document.querySelectorAll('.q-item').forEach(el => el.classList.remove('answered'));
+  document.getElementById('progressBar').style.width = '0';
+  document.getElementById('progressText').textContent = '0 / 20';
+  document.getElementById('errorMsg').classList.remove('visible');
+  document.getElementById('resultCard').classList.remove('visible');
+  [1,2,3,4].forEach(n => {
+    document.getElementById('sv'+n).textContent = '–';
+    const scEl = document.getElementById('sc'+n);
+    scEl.textContent = 'Belum diisi'; scEl.className = 'score-cat';
+    document.getElementById('sb'+n).style.width = '0';
+  });
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+</script>
+</body>
+</html>
